@@ -56,6 +56,9 @@ compile_commands.json
 # Build Dir
 build*/
 
+# Doxygen artifacts
+docs/
+
 # thirdparty library artifacts
 
 thirdparty/*/linux
