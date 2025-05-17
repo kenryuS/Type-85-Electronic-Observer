@@ -4,7 +4,7 @@ Qt6で作成されたクロスプラットフォームな艦これ補助専ブ�
 
 ## 現在のToDo
 
-- [ ] Create CEF instance and try accessing game's web page
+- [X] Create CEF instance and try accessing game's web page
 - [ ] Try capturing API
 - [ ] Extract and Format API response into usable state
 
@@ -34,7 +34,8 @@ Qt6で作成されたクロスプラットフォームな艦これ補助専ブ�
 ## 使用ライブラリー(予定)
 
 * [Qt6](https://doc.qt.io/qt-6/index.html) - UIフレームワーク - [GPLv3]()
-* [QCefView](https://github.com/CefView/QCefView) - ChromiumブラウザーをQt Widgetとして扱えるようにする - [LGPL-2.1]()
+* ~[QCefView](https://github.com/CefView/QCefView) - ChromiumブラウザーをQt Widgetとして扱えるようにする - [LGPL-2.1]()~
+* [Qt WebView](https://doc.qt.io/qt-6/qtwebview-index.html) - Chromium [LGPL-3.0]()
 * [json](https://github.com/nlohmann/json) - JSONデータの読み書き、ヘッダーオンリーライブラリー - [MIT license]()
 * [検討中]() - http プロキシ、通信キャプチャー - [未定]()
 
@@ -46,10 +47,20 @@ Qt6で作成されたクロスプラットフォームな艦これ補助専ブ�
 
 ## ビルドガイド
 
-(未記入)
+```bash
+$ git clone https://github.com/kenryuS/Type-85-Electronic-Observer.git EO
+$ cd EO
+$ nix develop // Nix が使える場合
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug // デバッグビルドしたい時
+$ make
+$ make install
+```
 
 ## 諸注意
 
 このプログラムは艦これのAPIを直接呼び出すような動作を決して行いません。
 
-現在このプログラムは開発段階にあり、すべての機能が実装されておらず、予期せぬ動作で損害を受けても開発者は_***一切の責任を負いません***_。
+現在このプログラムは開発段階にあり、すべての機能が実装されておらず、予期せぬ動作で損害を受けても開発者は***一切の責任を負いません***。

@@ -13,23 +13,55 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout"/>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Files">
     <property name="title">
      <string>&amp;Files</string>
     </property>
+    <addaction name="action_New_Session"/>
+    <addaction name="action_Close_Session"/>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menu_About">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_About"/>
+    <addaction name="action_About_Qt"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_URL">
+    <property name="title">
+     <string>&amp;URL</string>
+    </property>
+    <addaction name="actionOffical_Twitter"/>
+    <addaction name="actionKancolle_Wiki"/>
+   </widget>
    <addaction name="menu_Files"/>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_URL"/>
+   <addaction name="menu_About"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Quit">
@@ -37,8 +69,36 @@
     <string>&amp;Quit</string>
    </property>
   </action>
-  <zorder>dockWidget_2</zorder>
-  <zorder>dockWidget</zorder>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="action_About_Qt">
+   <property name="text">
+    <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="action_New_Session">
+   <property name="text">
+    <string>&amp;New Session</string>
+   </property>
+  </action>
+  <action name="actionOffical_Twitter">
+   <property name="text">
+    <string>Offical Twitter</string>
+   </property>
+  </action>
+  <action name="actionKancolle_Wiki">
+   <property name="text">
+    <string>Kancolle Wiki</string>
+   </property>
+  </action>
+  <action name="action_Close_Session">
+   <property name="text">
+    <string>&amp;Close Session</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>

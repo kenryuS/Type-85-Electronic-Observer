@@ -1,0 +1,4 @@
+#ifndef OBSERVER_LIB_HXX_
+#define OBSERVER_LIB_HXX_
+
+#endif // OBSERVER_LIB_HXX_
