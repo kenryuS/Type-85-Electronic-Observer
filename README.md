@@ -35,7 +35,7 @@ Qt6で作成されたクロスプラットフォームな艦これ補助専ブ�
 
 * [Qt6](https://doc.qt.io/qt-6/index.html) - UIフレームワーク - [GPLv3]()
 * ~[QCefView](https://github.com/CefView/QCefView) - ChromiumブラウザーをQt Widgetとして扱えるようにする - [LGPL-2.1]()~
-* [Qt WebView](https://doc.qt.io/qt-6/qtwebview-index.html) - Chromium [LGPL-3.0]()
+* [Qt WebEngine](https://doc.qt.io/qt-6/qtwebview-index.html) - Chromiumベースのウェブエンジン [LGPL-3.0]()
 * [json](https://github.com/nlohmann/json) - JSONデータの読み書き、ヘッダーオンリーライブラリー - [MIT license]()
 * [検討中]() - http プロキシ、通信キャプチャー - [未定]()
 

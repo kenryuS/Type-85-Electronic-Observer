@@ -1,0 +1,6 @@
+#ifndef OBSERVER_QT_SERVER_HXX_
+#define OBSERVER_QT_SERVER_HXX_
+
+
+
+#endif // OBSERVER_QT_SERVER_HXX_
