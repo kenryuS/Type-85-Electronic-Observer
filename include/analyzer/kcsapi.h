@@ -9,8 +9,8 @@ using json = nlohmann::json;
 namespace KCSAPI {
     class API {
         public:
-            virtual API(std::string name);
-            virtual ~API();
+            API(std::string name);
+            ~API();
 
             virtual void onRequest(std::string json_string);
 
