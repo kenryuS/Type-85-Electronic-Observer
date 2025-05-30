@@ -19,7 +19,7 @@ namespace KCSAPI {
         private:
             std::string APIName;
             json data;
-    }
+    };
 }
 
 #endif // KCSAPI_HXX_

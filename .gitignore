@@ -62,3 +62,4 @@ docs/
 # thirdparty library artifacts
 
 thirdparty/*/linux
+thirdparty/json/json.hpp

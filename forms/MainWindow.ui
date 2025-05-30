@@ -57,8 +57,16 @@
     <addaction name="actionOffical_Twitter"/>
     <addaction name="actionKancolle_Wiki"/>
    </widget>
+   <widget class="QMenu" name="menu_Browser">
+    <property name="title">
+     <string>&amp;Browser</string>
+    </property>
+    <addaction name="action_New_Tab"/>
+    <addaction name="action_Close_Tab"/>
+   </widget>
    <addaction name="menu_Files"/>
    <addaction name="menu_View"/>
+   <addaction name="menu_Browser"/>
    <addaction name="menu_Tools"/>
    <addaction name="menu_URL"/>
    <addaction name="menu_About"/>
@@ -97,6 +105,16 @@
   <action name="action_Close_Session">
    <property name="text">
     <string>&amp;Close Session</string>
+   </property>
+  </action>
+  <action name="action_New_Tab">
+   <property name="text">
+    <string>&amp;New Tab</string>
+   </property>
+  </action>
+  <action name="action_Close_Tab">
+   <property name="text">
+    <string>&amp;Close Tab</string>
    </property>
   </action>
  </widget>

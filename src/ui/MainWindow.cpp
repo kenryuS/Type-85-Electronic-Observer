@@ -39,4 +39,6 @@ void MainWindow::createActions() {
     });
     connect(m_ui->action_New_Session, &QAction::triggered, browser, &Browser::newSession);
     connect(m_ui->action_Close_Session, &QAction::triggered, browser, &Browser::closeSession);
+    connect(m_ui->action_New_Tab, &QAction::triggered, browser, &Browser::newTab);
+    connect(m_ui->action_Close_Tab, &QAction::triggered, browser, &Browser::closeTab);
 }
