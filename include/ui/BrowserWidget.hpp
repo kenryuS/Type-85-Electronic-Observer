@@ -5,9 +5,13 @@
 #include <QWebEnginePage>
 #include <QWebEngineSettings>
 #include <QWebEngineProfile>
+#include <QWebEngineNewWindowRequest>
+#include <QWidget>
 #include <QTabBar>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QList>
 #include <QUrl>
 #include <QString>
@@ -29,9 +33,10 @@ class Browser : public QWidget
         void newTab();
         void closeTab();
         void openLink();
+        void openLinkInNewTab(const QWebEngineNewWindowRequest &req);
         void setUrlToBar(const QUrl &url);
         void moveTab(int from, int to);
-        void mute();
+        void toggleMute();
 
     private:
         enum TabType {
@@ -40,14 +45,20 @@ class Browser : public QWidget
             NORMAL
         };
 
-        void setupBar();
+        void setupTabBar();
+        void setupUrlBar();
         void setupWebView();
 
         std::function<void(const QString&)> titleChangedCallbackGenerator(int tabIndex);
 
-        QVBoxLayout *layout;
+        QVBoxLayout *mainLayout;
         QTabBar *tab_bar;
+
+        QWidget *url_bar_parent;
+        QHBoxLayout *url_bar_layout;
         QLineEdit *url_bar;
+        QPushButton *mute_button;
+
         QWebEngineView *web_view;
         QWebEngineSettings *global_settings;
         QList<QWebEnginePage*> pages;

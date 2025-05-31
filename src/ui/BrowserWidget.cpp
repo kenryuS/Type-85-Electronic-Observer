@@ -1,13 +1,16 @@
 #include <BrowserWidget.hpp>
 
 #include <QVariant>
+#include <QSizePolicy>
+#include <QObject>
 
 Browser::Browser(QWidget *parent):
     QWidget(parent)
 {
-    layout = new QVBoxLayout(this);
+    mainLayout = new QVBoxLayout(this);
 
-    setupBar();
+    setupTabBar();
+    setupUrlBar();
     setupWebView();
 }
 
@@ -18,7 +21,7 @@ Browser::~Browser() {
     pages.clear();
 }
 
-void Browser::setupBar() {
+void Browser::setupTabBar() {
     tab_bar = new QTabBar(this);
 
     tab_bar->setMovable(true);
@@ -26,13 +29,26 @@ void Browser::setupBar() {
     tab_bar->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
     //tab_bar->setTabButton();
 
-    url_bar = new QLineEdit(this);
-
-    connect(url_bar, &QLineEdit::returnPressed, this, &Browser::openLink);
     connect(tab_bar, &QTabBar::tabMoved, this, &Browser::moveTab);
 
-    layout->addWidget(tab_bar);
-    layout->addWidget(url_bar);
+    mainLayout->addWidget(tab_bar);
+}
+
+void Browser::setupUrlBar() {
+    url_bar_parent = new QWidget(this);
+    url_bar_layout = new QHBoxLayout(url_bar_parent);
+
+    url_bar = new QLineEdit(url_bar_parent);
+    mute_button = new QPushButton(QString("mute"), url_bar_parent);
+
+    connect(url_bar, &QLineEdit::returnPressed, this, &Browser::openLink);
+    connect(mute_button, &QPushButton::pressed, this, &Browser::toggleMute);
+
+    url_bar_layout->addWidget(mute_button);
+    url_bar_layout->addWidget(url_bar);
+
+    url_bar_parent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+    mainLayout->addWidget(url_bar_parent);
 }
 
 void Browser::setupWebView() {
@@ -65,7 +81,7 @@ void Browser::setupWebView() {
         SETATTR(S::AllowRunningInsecureContent, true);
         SETATTR(S::AllowGeolocationOnInsecureOrigins, false);
         SETATTR(S::AllowWindowActivationFromJavaScript, false);
-        SETATTR(S::ShowScrollBars, true);
+        SETATTR(S::ShowScrollBars, false);
         SETATTR(S::PlaybackRequiresUserGesture, false);
         SETATTR(S::JavascriptCanPaste, false);
         SETATTR(S::WebRTCPublicInterfacesOnly, false);
@@ -96,7 +112,7 @@ void Browser::setupWebView() {
         web_view->setPage(pages[index]);
     });
 
-    layout->addWidget(web_view);
+    mainLayout->addWidget(web_view);
 }
 
 void Browser::newSession() {
@@ -131,6 +147,7 @@ void Browser::newTab() {
     web_view->setPage(pages[newTabIndex]);
     url_bar->setText(web_view->url().toString());
     connect(pages[newTabIndex], &QWebEnginePage::titleChanged, tab_bar, callback);
+    connect(pages[newTabIndex], &QWebEnginePage::newWindowRequested, this, &Browser::openLinkInNewTab);
 
     tab_bar->setCurrentIndex(newTabIndex);
 }
@@ -161,6 +178,23 @@ void Browser::openLink() {
     url_bar->clearFocus();
 }
 
+void Browser::openLinkInNewTab(const QWebEngineNewWindowRequest &req) {
+    int newTabIndex = tab_bar->addTab(tr("New Tab"));
+    tab_bar->setTabButton(newTabIndex, QTabBar::RightSide, nullptr);
+    tab_bar->setTabData(newTabIndex, QVariant(Browser::NORMAL));
+
+    QWebEnginePage *newPage = new QWebEnginePage();
+    std::function<void(const QString&)> callback = titleChangedCallbackGenerator(newTabIndex);
+    newPage->setUrl(req.requestedUrl());
+    pages.append(newPage);
+    web_view->setPage(pages[newTabIndex]);
+    url_bar->setText(web_view->url().toString());
+    connect(pages[newTabIndex], &QWebEnginePage::titleChanged, tab_bar, callback);
+    connect(pages[newTabIndex], &QWebEnginePage::newWindowRequested, this, &Browser::openLinkInNewTab);
+
+    tab_bar->setCurrentIndex(newTabIndex);
+}
+
 void Browser::setUrlToBar(const QUrl &url) {
     int currentTab = tab_bar->currentIndex();
     url_bar->setText(pages[currentTab]->url().toString());
@@ -189,7 +223,13 @@ void Browser::moveTab(int from, int to) {
     web_view->setPage(pages[to]);
 }
 
-void Browser::mute() {}
+void Browser::toggleMute() {
+    int currentTab = tab_bar->currentIndex();
+
+    QWebEnginePage *currentPage = pages[currentTab];
+
+    currentPage->setAudioMuted(!currentPage->isAudioMuted());
+}
 
 std::function<void(const QString&)> Browser::titleChangedCallbackGenerator(int tabIndex) {
     return [this, tabIndex](const QString &title) {
