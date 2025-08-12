@@ -27,7 +27,6 @@ void Browser::setupTabBar() {
     tab_bar->setMovable(true);
     tab_bar->setShape(QTabBar::RoundedNorth);
     tab_bar->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
-    //tab_bar->setTabButton();
 
     connect(tab_bar, &QTabBar::tabMoved, this, &Browser::moveTab);
 
@@ -169,6 +168,7 @@ void Browser::openLink() {
     QVariant tabData = tab_bar->tabData(currentTab);
     if (tabData == QVariant(Browser::MAIN_SESSION) || tabData == QVariant(Browser::MAIN_SESSION_CLOSED)) {
         url_bar->setText(pages[currentTab]->url().toString());
+        url_bar->clearFocus();
         return;
     }
     QUrl dest(url_bar->text());
